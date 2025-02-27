@@ -22,4 +22,4 @@ This NLP library will be used over NLTK for a few reasons:
 4. **Predefined stopword list**  
    - I won't need to manually parse for common words.
 5. **Future-proofing**  
-   - While NLTK is suitable for this scenario, I am assuming we want to schedule this implementation in the future, in which case using spaCy is much faster and cleaner.
+   - While NLTK is suitable for this scenario, I am assuming we want to scale this implementation in the future, in which case using spaCy is much faster.
