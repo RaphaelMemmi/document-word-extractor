@@ -1,8 +1,7 @@
 # Document Word Extractor
 
-Before I begin implementing this solution, I would like to justify why I have decided to use certain technologies:
-
 ## Technology Choices
+Before I begin implementing this solution, I would like to justify why I have decided to use certain technologies:
 
 ### Python
 - The specification states that the solution should be programmed in this language.
