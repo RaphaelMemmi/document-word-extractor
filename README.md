@@ -2,9 +2,10 @@
 
 ## Introduction
 
-Before implementing this solution, I would like to justify my choice of technologies.
 
-## Technology Choices
+## Technology Choices and Justifications
+
+Before implementing this solution, I would like to justify my choice of technologies.
 
 ### Python
 - The specification states that the solution should be programmed in Python.
