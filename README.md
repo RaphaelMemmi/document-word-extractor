@@ -1,4 +1,5 @@
 # Document Word Extractor
+This was a very fun project to work on!
 
 ## Technology Choices
 
@@ -24,6 +25,10 @@ This NLP library will be used over NLTK for a few reasons:
    - I won't need to manually parse for common words.
 5. **Future-proofing**  
    - While NLTK is suitable for this scenario, I am assuming we want to scale this implementation in the future, in which case using spaCy is much faster.
+  
+### Docker
+ - Harsha informed that the team uses Docker.
+ - It provides a neat and easy way to run the code in a consistent environment.
 
 ## Project Structure
 
