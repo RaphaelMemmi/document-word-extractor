@@ -27,8 +27,10 @@ This NLP library will be used over NLTK for a few reasons:
    - While NLTK is suitable for this scenario, I am assuming we want to scale this implementation in the future, in which case using spaCy is much faster.
   
 ### Docker
- - Harsha informed that the team uses Docker.
- - It provides a neat and easy way to run the code in a consistent environment.
+- Harsha informed that the team uses Docker.
+- It provides a neat and easy way to run the code in a consistent environment.
+- I want to demonstrate my proficiency with it.
+
 
 ## Project Structure
 
