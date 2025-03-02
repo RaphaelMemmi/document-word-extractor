@@ -10,7 +10,7 @@ This function loads the files within data/ and returns a dictionary
 of important words and example sentences
 """
 
-def process_text_files(directory="data/", min_word_count=4, max_sentences=10):
+def process_text_files(directory="data/"):
 
     #dict to count word occurences
     word_counter = Counter()
@@ -21,9 +21,11 @@ def process_text_files(directory="data/", min_word_count=4, max_sentences=10):
     #  stores document where word is found 
     doc_map = defaultdict(set)
 
+    # get all files and ensure they are sorted
+    sorted_files = sorted(os.listdir(directory))
 
     # loop through all files in the directory
-    for filename in os.listdir(directory):
+    for filename in sorted_files:
         if filename.endswith(".txt"):  
             file_path = os.path.join(directory, filename)
 
@@ -45,19 +47,34 @@ def process_text_files(directory="data/", min_word_count=4, max_sentences=10):
                         sentence_map[word].append(sent.text)
                         doc_map[word].add(filename)
 
-    # only keep the first max_sentences sentences for each word
-    sentence_map = {word: sentences[:max_sentences] for word, sentences in sentence_map.items()}
-
     # Convert sets to lists so they can be used in JSON responses and sort them
     doc_map = {word: sorted(docs, key=lambda x: int(''.join(filter(str.isdigit, x)))) for word, docs in doc_map.items()}  # ✅ Sort docs numerically
 
+    min_freq = min(word_counter.values()) if word_counter else 0
+    max_freq = max(word_counter.values()) if word_counter else 0
 
-    # sort words by frequency and filter out words that don't meet the minimum word count
-    word_counter = {word: count for word, count in word_counter.items() if count >= min_word_count}
-    word_counter = dict(sorted(word_counter.items(), key=lambda item: item[1], reverse=True))
-
-    return {
+    result = {
         "word_counts": word_counter,
         "sentences": sentence_map,
-        "documents": doc_map
+        "documents": doc_map,
+        "min_freq": min_freq, 
+        "max_freq": max_freq   
+    }
+
+    return result
+
+def filter_words_by_frequency(preprocessed_data, min_frequency, max_sentences):
+    """Filters the words based on selected minimum frequency."""
+    word_counts = {word: count for word, count in preprocessed_data["word_counts"].items() if count >= min_frequency}
+    word_counts = dict(sorted(word_counts.items(), key=lambda item: item[1], reverse=True))
+
+    filtered_sentences = {word: preprocessed_data["sentences"][word][:max_sentences] for word in word_counts}
+    filtered_documents = {word: preprocessed_data["documents"][word] for word in word_counts}
+
+    return {
+        "word_counts": word_counts,
+        "sentences": filtered_sentences,
+        "documents": filtered_documents,
+        "min_freq": preprocessed_data["min_freq"],
+        "max_freq": preprocessed_data["max_freq"]
     }
