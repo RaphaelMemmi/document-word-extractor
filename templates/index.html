@@ -4,125 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Extraction Results</title>
-    <script>
-        let minFreq, maxFreq;
-
-        async function initializeSliders() {
-            try {
-                const response = await fetch(`/process/`);
-                const data = await response.json();
-
-                minFreq = data.min_freq || 1;
-                maxFreq = data.max_freq || 100;
-
-                document.getElementById('wordFrequency').min = minFreq;
-                document.getElementById('wordFrequency').max = maxFreq;
-                document.getElementById('wordFrequency').value = minFreq;
-                document.getElementById('sliderValueFreq').textContent = minFreq;
-
-                document.getElementById('sentenceSlider').min = minFreq;
-                document.getElementById('sentenceSlider').max = maxFreq;
-                document.getElementById('sentenceSlider').value = maxFreq;
-                document.getElementById('sliderValueSentences').textContent = maxFreq;
-
-                loadData(minFreq, maxFreq);
-            } catch (error) {
-                console.error("Error initializing sliders:", error);
-            }
-        }
-
-        async function loadData(minFrequency, maxSentences) {
-            try {
-                const response = await fetch(`/process/?min_frequency=${minFrequency}&max_sentences=${maxSentences}`);
-                const data = await response.json();
-
-                document.getElementById('sliderValueFreq').textContent = minFrequency;
-                document.getElementById('sliderValueSentences').textContent = maxSentences;
-
-                const tableBody = document.getElementById('data-body');
-                tableBody.innerHTML = "";
-
-                for (let word in data.word_counts) {
-                    let row = document.createElement('tr');
-
-                    let wordCell = document.createElement('td');
-                    wordCell.textContent = `${word} (${data.word_counts[word]})`;
-                    row.appendChild(wordCell);
-
-                    let docsCell = document.createElement('td');
-                    docsCell.textContent = data.documents[word] ? data.documents[word].join(", ") : "N/A";
-                    row.appendChild(docsCell);
-
-                    let sentencesCell = document.createElement('td');
-                    sentencesCell.innerHTML = data.sentences[word] 
-                        ? data.sentences[word].map(s => `<p>${s.replace(new RegExp("\\b" + word + "\\b", "gi"), `<b>${word}</b>`)}</p>`).join("") 
-                        : "N/A";
-                    row.appendChild(sentencesCell);
-
-                    tableBody.appendChild(row);
-                }
-            } catch (error) {
-                console.error("Error loading data:", error);
-            }
-        }
-
-        function updateFilters() {
-            const minFrequency = document.getElementById('wordFrequency').value;
-            const maxSentences = document.getElementById('sentenceSlider').value;
-            loadData(minFrequency, maxSentences);
-        }
-
-        window.onload = initializeSliders;
-    </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .filters {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input[type="range"] {
-            width: 200px;
-            margin: 0 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        td p {
-            margin: 5px 0;
-        }
-        b {
-            color: rgb(0, 0, 0);
-        }
-    </style>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <h1>Extracted Words from Documents</h1>
@@ -147,5 +29,7 @@
         </thead>
         <tbody id="data-body"></tbody>
     </table>
+
+    <script src="/static/scripts.js"></script>
 </body>
 </html>

@@ -7,10 +7,8 @@ PREPROCESSED_DATA = process_text_files()
 
 def process_documents(request):
     """API endpoint to return dynamically filtered word analysis."""
-    print("API Request Received")
 
     if "min_freq" not in PREPROCESSED_DATA or "max_freq" not in PREPROCESSED_DATA:
-        print("Error: min_freq or max_freq missing from preprocessed data")
         return JsonResponse({"error": "Preprocessing failed. Check process_text_files() output."}, status=500)
 
     # ✅ Get min_frequency and max_sentences from request
@@ -24,7 +22,6 @@ def process_documents(request):
     min_frequency = int(min_frequency)
     max_sentences = int(max_sentences)
 
-    print(f"Filtering words with min_frequency >= {min_frequency} and max_sentences = {max_sentences}")
     filtered_data = filter_words_by_frequency(PREPROCESSED_DATA, min_frequency, max_sentences)
 
     return JsonResponse(filtered_data)

@@ -48,11 +48,13 @@ def process_text_files(directory="data/"):
                         doc_map[word].add(filename)
 
     # Convert sets to lists so they can be used in JSON responses and sort them
-    doc_map = {word: sorted(docs, key=lambda x: int(''.join(filter(str.isdigit, x)))) for word, docs in doc_map.items()}  # ✅ Sort docs numerically
+    doc_map = {word: sorted(docs, key=lambda x: int(''.join(filter(str.isdigit, x)))) for word, docs in doc_map.items()} 
 
+    # get the minimum and maximum frequency of words
     min_freq = min(word_counter.values()) if word_counter else 0
     max_freq = max(word_counter.values()) if word_counter else 0
 
+    # return the word counts, sentences, documents, and min/max frequency
     result = {
         "word_counts": word_counter,
         "sentences": sentence_map,
@@ -68,6 +70,7 @@ def filter_words_by_frequency(preprocessed_data, min_frequency, max_sentences):
     word_counts = {word: count for word, count in preprocessed_data["word_counts"].items() if count >= min_frequency}
     word_counts = dict(sorted(word_counts.items(), key=lambda item: item[1], reverse=True))
 
+    # Filter sentences and documents based on the selected words
     filtered_sentences = {word: preprocessed_data["sentences"][word][:max_sentences] for word in word_counts}
     filtered_documents = {word: preprocessed_data["documents"][word] for word in word_counts}
 
