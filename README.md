@@ -31,6 +31,16 @@ This NLP library will be used over NLTK for a few reasons:
  - It provides a neat and easy way to run the code in a consistent environment.
  - I want to demonstrate my proficiency with it.
 
+## Additional Features
+### Interactive Sliders for Better Visualisation
+To improve data exploration, the application includes interactive sliders that allow users to:
+  - Filter words by frequency
+     - Users can dynamically adjust the minimum word frequency threshold.
+     - This helps in focusing on commonly used words while removing less relevant ones.
+  - Control sentence display
+     - Users can set a limit on the maximum number of sentences displayed per word.
+     - This ensures better readability, especially for words with many occurrences.
+By allowing users to interactively refine the data, the sliders make it easier to visually analyse word importance and context without overwhelming the display.
 
 ## Project Structure
 
