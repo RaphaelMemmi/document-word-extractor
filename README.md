@@ -40,6 +40,7 @@ To improve data exploration, the application includes interactive sliders that a
   - Control sentence display
      - Users can set a limit on the maximum number of sentences displayed per word.
      - This ensures better readability, especially for words with many occurrences.
+       
 By allowing users to interactively refine the data, the sliders make it easier to visually analyse word importance and context without overwhelming the display.
 
 ## Project Structure
