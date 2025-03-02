@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from api.views import process_documents, frontend_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('process/', process_documents),
+    path('', frontend_view),
 ]

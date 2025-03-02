@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Extraction Results</title>
+    <script>
+        async function loadData() {
+            try {
+                // Fetch data from the Django API
+                const response = await fetch('/process/');
+                const data = await response.json();
+                
+                const tableBody = document.getElementById('data-body');
+                tableBody.innerHTML = "";  // Clear old data
+
+                // Loop through the words and create table rows
+                for (let word in data.word_counts) {
+                    let row = document.createElement('tr');
+
+                    // Word + occurrences
+                    let wordCell = document.createElement('td');
+                    wordCell.textContent = `${word} (${data.word_counts[word]})`;
+                    row.appendChild(wordCell);
+
+                    // Documents
+                    let docsCell = document.createElement('td');
+                    docsCell.textContent = data.documents[word] ? data.documents[word].join(", ") : "N/A";
+                    row.appendChild(docsCell);
+
+                    // Sentences (each in a new line, with the word in bold)
+                    let sentencesCell = document.createElement('td');
+                    sentencesCell.innerHTML = data.sentences[word] 
+                        ? data.sentences[word].map(s => `<p>${s.replace(new RegExp("\\b" + word + "\\b", "gi"), `<b>${word}</b>`)}</p>`).join("") 
+                        : "N/A";
+                    row.appendChild(sentencesCell);
+
+                    tableBody.appendChild(row);
+                }
+            } catch (error) {
+                console.error("Error loading data:", error);
+                document.getElementById('error-message').textContent = "Error loading data. Please try again.";
+            }
+        }
+
+        window.onload = loadData;
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        td p {
+            margin: 5px 0; /* Spacing between sentences */
+        }
+        b {
+            color: black; /* Highlights the word in bold red */
+        }
+    </style>
+</head>
+<body>
+    <h1>Extracted Words from Documents</h1>
+    <p id="error-message" style="color: red;"></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Word (Total Occurrences)</th>
+                <th>Documents</th>
+                <th>Sentences Containing the Word</th>
+            </tr>
+        </thead>
+        <tbody id="data-body"></tbody>
+    </table>
+</body>
+</html>
