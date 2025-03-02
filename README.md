@@ -25,13 +25,6 @@ This NLP library will be used over NLTK for a few reasons:
 5. **Future-proofing**  
    - While NLTK is suitable for this scenario, I am assuming we want to scale this implementation in the future, in which case using spaCy is much faster.
 
-## Prerequisites
-
-Before running this project, ensure you have the following installed:
-
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
-
 ## Project Structure
 
 ```
@@ -46,6 +39,13 @@ document_word_extractor/
 │── requirements.txt      # Python dependencies
 │── README.md             # Project instructions
 ```
+
+## Prerequisites
+
+Before running this project, ensure you have the following installed:
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Setup
 
