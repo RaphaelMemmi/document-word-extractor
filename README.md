@@ -49,26 +49,26 @@ document_word_extractor/
 
 ## Setup
 
-Clone the repository:
+### Clone the Repository
 
 ```sh
 git clone https://github.com/your-username/document-word-extractor.git
 cd document-word-extractor
 ```
 
-## Build the Docker Container
+### Build the Docker Container
 
 ```sh
 docker compose build
 ```
 
-## Start the Application
+### Start the Application
 
 ```sh
 docker compose up -d
 ```
 
-## Apply Migrations
+### Apply Migrations
 
 Although I don't use any models, there are still default migrations to be made:
 
